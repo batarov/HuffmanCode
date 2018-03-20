@@ -27,6 +27,11 @@ public:
             return false;
         }
 
+        if (inFile.Size() == 1)
+        {
+            return false;
+        }
+
         unsigned char buf[BUF_SIZE];
         CodeBook codeBook;
         {
