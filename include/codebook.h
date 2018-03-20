@@ -7,19 +7,14 @@
 
 struct CanonicalCodeBook
 {
-    std::array<unsigned char, 16> Count;
+    std::vector<unsigned char> Count;
     std::vector<unsigned char> Symbol;
-
-    CanonicalCodeBook()
-    {
-        Count.fill(0);
-    }
 };
 
 struct CodeWord
 {
     int Bits = 0;
-    unsigned short Code = 0;
+    unsigned int Code = 0;
 };
 
 struct CodeBookEntry
@@ -33,7 +28,7 @@ struct CodeBookEntry
         Code.Bits = aBits;
     }
 
-    void SetCode(unsigned short aCode)
+    void SetCode(unsigned int aCode)
     {
         Code.Code = aCode;
     }
@@ -51,7 +46,7 @@ public:
             return lhs.Code.Bits == rhs.Code.Bits ? lhs.Symbol < rhs.Symbol : lhs.Code.Bits < rhs.Code.Bits;
         });
 
-        unsigned short code = 0;
+        unsigned int code = 0;
         auto nextBits = mEntry[0].Code.Bits;
         for (size_t i = 0; i < mEntry.size(); ++i)
         {
@@ -84,13 +79,14 @@ public:
         }
 
         CanonicalCodeBook book;
+        auto maxBits = mEntry.back().Code.Bits;
+        book.Count.resize(maxBits + 1);
+        book.Count[0] = maxBits;
         for (const auto& entry : mEntry)
         {
             book.Count[entry.Code.Bits] += 1;
             book.Symbol.push_back(entry.Symbol);
         }
-
-        book.Count[0] = mEntry.back().Code.Bits;
 
         return book;
     }

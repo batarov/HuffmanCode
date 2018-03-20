@@ -15,7 +15,7 @@ struct HuffmanHeader
             return false;
         }
 
-        if (!aFile.Write((char*)codeBook.Count.data(), codeBook.Count[0] + 1))
+        if (!aFile.Write((char*)codeBook.Count.data(), codeBook.Count.size()))
         {
             return false;
         }
@@ -42,13 +42,14 @@ struct HuffmanHeader
         }
 
         auto& count = codeBook.Count;
-        if (aFile.Read((char*)count.data(), 1) != 1)
+        unsigned char size;
+        if (aFile.Read((char*)&size, 1) != 1)
         {
             return false;
         }
 
-        int size = count[0];
-        assert(size > 0 && size < 16);
+        count.resize(size + 1);
+        count[0] = size;
         if (size == 0 || aFile.Read((char*)count.data() + 1, size) != size)
         {
             return false;

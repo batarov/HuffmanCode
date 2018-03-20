@@ -15,7 +15,7 @@ public:
         int count;
         int index;
         code = first = index = 0;
-        for (len = 1; len < 16; ++len)
+        for (len = 1; len < aCodeBook.Count.size(); ++len)
         {
             auto bit = aReader.ReadBit();
             code |= bit;

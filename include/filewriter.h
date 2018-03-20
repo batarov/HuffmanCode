@@ -17,7 +17,7 @@ public:
             return;
         }
 
-        unsigned short currentBit = (1 << (aCode->Bits - 1));
+        unsigned int currentBit = (1 << (aCode->Bits - 1));
         while (currentBit)
         {
             WriteBit(aCode->Code & currentBit);
