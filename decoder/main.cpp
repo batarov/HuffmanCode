@@ -14,7 +14,10 @@ int main(int argc, char** argv)
     }
 
     HuffmanDecoder decoder;
-    assert(decoder.Decode(argv[1], argv[2]));
+    if (!decoder.Decode(argv[1], argv[2]))
+    {
+        cout << "File could not be decoded" << endl;
+    }
 
     return 0;
 }
