@@ -7,6 +7,7 @@ class HuffmanEncoder
 {
     static const int BUF_SIZE = 4096;
     static const int NUM_SYMBOLS = 256;
+    static const unsigned int MAX_FILE_SIZE = -1;
 
 public:
     HuffmanEncoder()
@@ -27,7 +28,7 @@ public:
             return false;
         }
 
-        if (inFile.Size() == 1)
+        if (inFile.Size() == 1 || inFile.Size() > MAX_FILE_SIZE)
         {
             return false;
         }
