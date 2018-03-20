@@ -28,7 +28,7 @@ public:
             return false;
         }
 
-        if (inFile.Size() == 1 || inFile.Size() > MAX_FILE_SIZE)
+        if (inFile.Size() > MAX_FILE_SIZE)
         {
             return false;
         }

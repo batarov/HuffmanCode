@@ -96,7 +96,7 @@ private:
     {
         if (aNode->IsLeaf)
         {
-            mEntry.push_back(CodeBookEntry(aNode->Symbol, aBits));
+            mEntry.push_back(CodeBookEntry(aNode->Symbol, aBits == 0 ? 1 : aBits));
         }
         else
         {
