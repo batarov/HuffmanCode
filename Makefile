@@ -1,5 +1,5 @@
 CXX = g++
-FLAGS = -std=c++11 -O1 -g -fsanitize=address -fno-omit-frame-pointer
+FLAGS = -std=c++11 -m64 -Ofast -flto -march=native -funroll-loops
 INCLUDE = -Iinclude
 DEFINES = -DNDEBUG
 
