@@ -37,7 +37,7 @@ struct CodeBookEntry
 class CodeBook
 {
 public:
-    void Init(Node* aRoot)
+    void Init(const Node* aRoot)
     {
         GenerateEntries(aRoot, 0);
 

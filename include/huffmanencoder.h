@@ -2,6 +2,7 @@
 
 #include "huffmanfile.h"
 #include "filewriter.h"
+#include "tree.h"
 
 class HuffmanEncoder
 {
@@ -10,16 +11,6 @@ class HuffmanEncoder
     static const unsigned int MAX_FILE_SIZE = -1;
 
 public:
-    HuffmanEncoder()
-        : mLeafNode(256)
-        , mInternalNode(512)
-    {
-        for (auto& node : mInternalNode)
-        {
-            node.IsLeaf = false;
-        }
-    }
-
     bool Encode(const char* aInFileName, const char* aOutFileName)
     {
         File inFile(aInFileName);
@@ -45,9 +36,14 @@ public:
                 }
             }
 
-            auto root = BuildTree(freq, NUM_SYMBOLS);
+            Tree tree(freq, NUM_SYMBOLS);
+            auto root = tree.GetRoot();
+            if (!root)
+            {
+                return false;
+            }
+
             codeBook.Init(root);
-            DestroyNodes();
         }
 
         HuffmanHeader header{(unsigned int)inFile.Size(), codeBook.Encode()};
@@ -81,68 +77,4 @@ public:
 
         return true;
     }
-
-private:
-    struct NodeCmp
-    {
-        bool operator()(const Node* lhs, const Node* rhs)
-        {
-            return lhs->Frequence > rhs->Frequence;
-        }
-    };
-
-    Node* CreateLeafNode()
-    {
-        auto node = &mLeafNode[mCurrentLeafNode];
-        ++mCurrentLeafNode;
-        return node;
-    }
-
-    Node* CreateInternalNode()
-    {
-        auto node = &mInternalNode[mCurrentInternalNode];
-        ++mCurrentInternalNode;
-        return node;
-    }
-
-    void DestroyNodes()
-    {
-        mCurrentLeafNode = 0;
-        mCurrentInternalNode = 0;
-    }
-
-    Node* BuildTree(const unsigned int* aFreq, int aSize)
-    {
-        std::priority_queue<Node*, std::vector<Node*>, NodeCmp> trees;
-        for (int i = 0; i < aSize; ++i)
-        {
-            if(aFreq[i] != 0)
-            {
-                auto node = CreateLeafNode();
-                node->Init(i, aFreq[i]);
-                trees.push(node);
-            }
-        }
-
-        while (trees.size() > 1)
-        {
-            auto childL = trees.top();
-            trees.pop();
-
-            auto childR = trees.top();
-            trees.pop();
-
-            auto internal = CreateInternalNode();
-            internal->Init(childL, childR);
-            trees.push(internal);
-        }
-
-        return trees.top();
-    }
-
-private:
-    size_t mCurrentLeafNode = 0;
-    size_t mCurrentInternalNode = 0;
-    std::vector<Node> mLeafNode;
-    std::vector<Node> mInternalNode;
 };
