@@ -7,10 +7,10 @@ struct Node
     bool IsLeaf = true;
 
     unsigned char Symbol;
-    int Frequence = 0;
+    unsigned int Frequence = 0;
     int Bits = 0;
 
-    void Init(char aSymbol, int aFrequence)
+    void Init(char aSymbol, unsigned int aFrequence)
     {
         Bits = 0;
         Symbol = aSymbol;

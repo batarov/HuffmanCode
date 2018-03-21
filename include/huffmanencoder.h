@@ -36,7 +36,7 @@ public:
         unsigned char buf[BUF_SIZE];
         CodeBook codeBook;
         {
-            int freq[NUM_SYMBOLS] = {};
+            unsigned int freq[NUM_SYMBOLS] = {};
             while (auto size = inFile.Read((char*)buf, BUF_SIZE))
             {
                 for (int i = 0; i < size; ++i)
@@ -111,7 +111,7 @@ private:
         mCurrentInternalNode = 0;
     }
 
-    Node* BuildTree(const int* aFreq, int aSize)
+    Node* BuildTree(const unsigned int* aFreq, int aSize)
     {
         std::priority_queue<Node*, std::vector<Node*>, NodeCmp> trees;
         for (int i = 0; i < aSize; ++i)
