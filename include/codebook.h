@@ -44,6 +44,9 @@ class CodeBook
 public:
     void Init(const Node* aRoot)
     {
+        mEntry.clear();
+        mCodeWord.fill(nullptr);
+
         GenerateEntries(aRoot, 0);
 
         std::sort(mEntry.begin(), mEntry.end(), [](const CodeBookEntry& lhs, const CodeBookEntry& rhs)
@@ -64,7 +67,6 @@ public:
             code = (code + 1) << (nextBits - mEntry[i].Code.Bits);
         }
 
-        mCodeWord.fill(nullptr);
         for (const auto& entry : mEntry)
         {
             mCodeWord[entry.Symbol] = &entry.Code;
