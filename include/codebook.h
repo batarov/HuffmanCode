@@ -94,7 +94,7 @@ public:
 private:
     void GenerateEntries(const Node* aNode, int aBits)
     {
-        if (aNode->IsLeaf)
+        if (aNode->IsLeaf())
         {
             mEntry.push_back(CodeBookEntry(aNode->Symbol, aBits == 0 ? 1 : aBits));
         }

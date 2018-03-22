@@ -6,16 +6,11 @@ class Tree
 {
 public:
     Tree(const unsigned int* aFreq, size_t aSize)
-        : mLeafNode(256)
-        , mInternalNode(512)
+        : mLeafNode(256, true)
+        , mInternalNode(512, false)
     {
         if (aFreq && aSize != 0)
         {
-            for (auto& node : mInternalNode)
-            {
-                node.IsLeaf = false;
-            }
-
             mRoot = Build(aFreq, aSize);
         }
     }

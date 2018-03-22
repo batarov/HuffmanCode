@@ -4,11 +4,15 @@ struct Node
 {
     Node* Left = nullptr;
     Node* Right = nullptr;
-    bool IsLeaf = true;
 
     unsigned char Symbol;
     unsigned int Frequence = 0;
     int Bits = 0;
+
+    Node(bool aIsLeaf)
+        : mIsLeaf(aIsLeaf)
+    {
+    }
 
     void Init(char aSymbol, unsigned int aFrequence)
     {
@@ -24,4 +28,12 @@ struct Node
         Left = aLeft;
         Right = aRight;
     }
+
+    bool IsLeaf() const
+    {
+        return mIsLeaf;
+    }
+
+private:
+    bool mIsLeaf;
 };
