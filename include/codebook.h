@@ -9,6 +9,11 @@ struct CanonicalCodeBook
 {
     std::vector<unsigned char> Count;
     std::vector<unsigned char> Symbol;
+
+    void AddSymbol(unsigned char aSymbol)
+    {
+        Symbol.push_back(aSymbol);
+    }
 };
 
 struct CodeWord
@@ -85,7 +90,7 @@ public:
         for (const auto& entry : mEntry)
         {
             book.Count[entry.Code.Bits] += 1;
-            book.Symbol.push_back(entry.Symbol);
+            book.AddSymbol(entry.Symbol);
         }
 
         return book;
