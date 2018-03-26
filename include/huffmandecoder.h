@@ -7,19 +7,15 @@
 class HuffmanDecoder
 {
 public:
-    int Decode(FileReader& aReader, const CanonicalCodeBook& aCodeBook)
+    int Decode(FileReader& aReader, const EncodedCanonicalCodeBook& aCodeBook)
     {
-        int len;
-        int code;
-        int first;
-        int count;
-        int index;
+        int code, first, count, index;
         code = first = index = 0;
-        for (len = 1; len < aCodeBook.Count.size(); ++len)
+        for (size_t i = 1; i < aCodeBook.Count.size(); ++i)
         {
             auto bit = aReader.ReadBit();
             code |= bit;
-            count = aCodeBook.Count[len];
+            count = aCodeBook.Count[i];
             if (code - count < first)
             {
                 return aCodeBook.Symbol[index + (code - first)];

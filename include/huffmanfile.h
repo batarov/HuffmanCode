@@ -6,7 +6,7 @@
 struct HuffmanHeader
 {
     unsigned int length;
-    CanonicalCodeBook codeBook;
+    EncodedCanonicalCodeBook codeBook;
 
     bool Write(File& aFile)
     {

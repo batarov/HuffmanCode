@@ -5,7 +5,7 @@
 
 #include "node.h"
 
-struct CanonicalCodeBook
+struct EncodedCanonicalCodeBook
 {
     std::vector<unsigned char> Count;
     std::vector<unsigned char> Symbol;
@@ -78,14 +78,14 @@ public:
         return mCodeWord[aSymbol];
     }
 
-    CanonicalCodeBook Encode()
+    EncodedCanonicalCodeBook Encode()
     {
         if (mEntry.empty())
         {
-            return CanonicalCodeBook();
+            return {};
         }
 
-        CanonicalCodeBook book;
+        EncodedCanonicalCodeBook book;
         auto maxBits = mEntry.back().Code.Bits;
         book.Count.resize(maxBits + 1);
         book.Count[0] = maxBits;
