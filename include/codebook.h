@@ -37,7 +37,14 @@ struct CodeBookEntry
     {
         Code.Code = aCode;
     }
+
+    friend bool operator<(const CodeBookEntry& lhs, const CodeBookEntry& rhs);
 };
+
+inline bool operator<(const CodeBookEntry& lhs, const CodeBookEntry& rhs)
+{
+    return lhs.Code.Bits == rhs.Code.Bits ? lhs.Symbol < rhs.Symbol : lhs.Code.Bits < rhs.Code.Bits;
+}
 
 class CodeBook
 {
@@ -49,10 +56,7 @@ public:
 
         GenerateEntries(aRoot, 0);
 
-        std::sort(mEntry.begin(), mEntry.end(), [](const CodeBookEntry& lhs, const CodeBookEntry& rhs)
-        {
-            return lhs.Code.Bits == rhs.Code.Bits ? lhs.Symbol < rhs.Symbol : lhs.Code.Bits < rhs.Code.Bits;
-        });
+        std::sort(mEntry.begin(), mEntry.end());
 
         unsigned int code = 0;
         auto nextBits = mEntry[0].Code.Bits;
