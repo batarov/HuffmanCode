@@ -2,11 +2,14 @@ CXX = g++
 FLAGS = -std=c++11 -m64 -Ofast -flto -march=native -funroll-loops
 INCLUDE = -Iinclude
 DEFINES = -DNDEBUG
+DEL_DIR = rm -R
+MKDIR = mkdir -p
+DISTDIR = bin
 
 all:
-	rm -Rf bin
-	$(CXX) $(FLAGS) $(INCLUDE) $(DEFINES) encoder/main.cpp -o encode
-	$(CXX) $(FLAGS) $(INCLUDE) $(DEFINES) decoder/main.cpp -o decode
-	mkdir bin
-	mv encode bin
-	mv decode bin
+	$(MKDIR) $(DISTDIR)
+	$(CXX) $(FLAGS) $(INCLUDE) $(DEFINES) encoder/main.cpp -o $(DISTDIR)/encode
+	$(CXX) $(FLAGS) $(INCLUDE) $(DEFINES) decoder/main.cpp -o $(DISTDIR)/decode
+
+clean:
+	$(DEL_DIR) $(DISTDIR)
